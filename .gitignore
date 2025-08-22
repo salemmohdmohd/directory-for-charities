@@ -3,6 +3,7 @@
 # database.database
 # database.db
 # diagram.png
+.DS_Store
 public/*
 dist/*
 package.json
