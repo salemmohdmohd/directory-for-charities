@@ -1,3 +1,27 @@
+## One time; Steps too run
+
+### Local Setup with SQLite
+
+1- python3 -m venv .venv
+
+2- source .venv/bin/activate
+
+3- pipenv install
+
+4- export FLASK_APP=src/app.py
+: Tells Flask which file is your main application, so migration commands know where to find your app and models.
+
+5- pipenv run flask db migrate
+: Creates new migration scripts based on changes in your models (e.g., if you add or change tables).
+
+6- pipenv run flask db upgrade
+: Applies those migrations to your database, updating its structure to match your models.
+
+6- pipenv run start
+
+
+
+
 <a href="https://www.breatheco.de"><img height="280" align="right" src="https://github.com/4GeeksAcademy/flask-rest-hello/blob/main/docs/assets/badge.png?raw=true"></a>
 
 # Flask Boilerplate for Junior Developers

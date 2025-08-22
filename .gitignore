@@ -1,8 +1,8 @@
-.env
+# .env
 .venv
-database.database
-database.db
-diagram.png
+# database.database
+# database.db
+# diagram.png
 public/*
 dist/*
 package.json
