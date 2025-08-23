@@ -1,0 +1,12 @@
+# Project requirements for migrations and src
+Flask
+alembic
+SQLAlchemy
+python-dotenv
+pytest
+requests
+Flask-Migrate
+Flask-SQLAlchemy
+flask-admin
+flask-swagger
+flask-cors

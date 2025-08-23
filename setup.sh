@@ -26,9 +26,11 @@ export FLASK_ENV=${FLASK_ENV:-development}
 echo "Upgrading pip and installing requirements..."
 pip install --upgrade pip
 if [ -f requirements.txt ]; then
-	pip install --no-cache-dir -r requirements.txt
+	echo "Installing requirements from requirements.txt..."
+	.venv/bin/pip install -r requirements.txt
 else
-	echo "requirements.txt not found — falling back to install editable project (may fail)"
+	echo "requirements.txt not found. Please create one with the required dependencies."
+	exit 1
 fi
 
 echo "Running database migrations (if any)..."
