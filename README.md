@@ -1,3 +1,17 @@
+# Running Both Backend and Frontend Apps
+
+To start both the backend (Flask) and frontend (React/Vite) servers at once, use the provided script:
+
+```bash
+bash run-apps.sh
+```
+
+This will:
+- Activate the Python virtual environment
+- Start the Flask backend using the Flask CLI
+- Start the React frontend using Vite
+
+You can access the frontend at http://localhost:5173 and the backend at http://localhost:3000 (default ports).
 # Charity Directory
 
 A platform for users and organizations to connect and manage charity data.
