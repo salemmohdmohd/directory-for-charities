@@ -1,0 +1,12 @@
+Flask
+Flask-Migrate
+Flask-Cors
+Flask-SQLAlchemy
+SQLAlchemy
+alembic
+python-dotenv
+pytest
+requests
+flask-admin
+flask-swagger
+
