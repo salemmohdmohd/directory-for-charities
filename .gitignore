@@ -7,5 +7,5 @@
 public/*
 dist/*
 package.json
-!.vscode
+# !.vscode
 __pycache__/
