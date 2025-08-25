@@ -5,7 +5,8 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from .utils import APIException, generate_sitemap
 from .admin import setup_admin
-from .models import db, User
+from .db import db
+from .models import User
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -14,7 +15,7 @@ db_url = os.getenv("DATABASE_URL")
 if db_url:
 	app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
 else:
-	app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///example.db"
+	app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///../instance/example.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 MIGRATE = Migrate(app, db)

@@ -1,0 +1,28 @@
+from ..db import db
+
+class Organization(db.Model):
+    __tablename__ = 'organizations'
+    org_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    mission = db.Column(db.Text)
+    description = db.Column(db.Text)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'))
+    location_id = db.Column(db.Integer, db.ForeignKey('locations.location_id'))
+    address = db.Column(db.Text)
+    phone = db.Column(db.String(20))
+    email = db.Column(db.String(150))
+    website = db.Column(db.String(255))
+    donation_link = db.Column(db.String(255))
+    logo_url = db.Column(db.String(255))
+    operating_hours = db.Column(db.Text)
+    established_year = db.Column(db.Integer)
+    status = db.Column(db.String(20), default='pending')
+    verification_level = db.Column(db.String(20), default='basic')
+    admin_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    approved_by = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    approval_date = db.Column(db.DateTime)
+    rejection_reason = db.Column(db.Text)
+    view_count = db.Column(db.Integer, default=0)
+    bookmark_count = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime)
+    updated_at = db.Column(db.DateTime)
