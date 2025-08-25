@@ -9,5 +9,10 @@ def setup_admin(app):
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
     admin = Admin(app, name='Charity Directory Admin', template_mode='bootstrap3')
     admin.add_view(ModelView(User, db.session))
-    # Add more models as needed
-    # admin.add_view(ModelView(YourModelName, db.session))
+    from .models import Organization, Category, Location, Notification, AuditLog, Advertisement
+    admin.add_view(ModelView(Organization, db.session))
+    admin.add_view(ModelView(Category, db.session))
+    admin.add_view(ModelView(Location, db.session))
+    admin.add_view(ModelView(Notification, db.session))
+    admin.add_view(ModelView(AuditLog, db.session))
+    admin.add_view(ModelView(Advertisement, db.session))
