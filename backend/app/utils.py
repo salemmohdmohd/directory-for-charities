@@ -36,8 +36,8 @@ def generate_sitemap(app):
             "Organization by ID": "/orgs/<id>"
         },
         "Admin API": {
-            "Admin Users": "/admin/users",
-            "Admin Organizations": "/admin/orgs"
+            "All Admin Users": "/api/admin/",
+            "Admin User by ID": "/api/admin/<id>"
         }
     }
 
