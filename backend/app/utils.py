@@ -1,6 +1,7 @@
-from flask import jsonify, url_for
+from flask import jsonify
 
 class APIException(Exception):
+    """Custom API Exception for handling errors"""
     status_code = 400
 
     def __init__(self, message, status_code=None, payload=None):
@@ -15,34 +16,42 @@ class APIException(Exception):
         rv['message'] = self.message
         return rv
 
-def has_no_empty_params(rule):
-    defaults = rule.defaults if rule.defaults is not None else ()
-    arguments = rule.arguments if rule.arguments is not None else ()
-    return len(defaults) >= len(arguments)
-
 def generate_sitemap(app):
-    links = ['/admin/']
-    for rule in app.url_map.iter_rules():
-        # Filter out rules we can't navigate to in a browser
-        # and rules that require parameters
-        if "GET" in rule.methods and has_no_empty_params(rule):
-            url = url_for(rule.endpoint, **(rule.defaults or {}))
-            if "/admin/" not in url:
-                links.append(url)
+    endpoints = {
+        "API Documentation": {
+            "Health Check": "/health",
+            "Admin Dashboard": "/admin/"
+        },
+        "Authentication": {
+            "Login": "/auth/login",
+            "Signup": "/auth/signup"
+        },
+        "Users": {
+            "Profile": "/users/profile",
+            "All Users": "/users/",
+            "User by ID": "/users/<id>"
+        },
+        "Organizations": {
+            "All Organizations": "/orgs/",
+            "Organization by ID": "/orgs/<id>"
+        },
+        "Admin API": {
+            "Admin Users": "/admin/users",
+            "Admin Organizations": "/admin/orgs"
+        }
+    }
 
-    endpoint_details = []
-    for rule in app.url_map.iter_rules():
-        if "GET" in rule.methods and has_no_empty_params(rule):
-            url = url_for(rule.endpoint, **(rule.defaults or {}))
-            methods = ', '.join(sorted(rule.methods - {'HEAD', 'OPTIONS'}))
-            endpoint_details.append(f"<li><a href='{url}' title='Methods: {methods}'><strong>{url}</strong></a> <span style='background:#eee;border-radius:3px;padding:2px 6px;font-size:0.9em;'>{methods}</span></li>")
-    links_html = "\n".join(endpoint_details)
-    return f"""
-        <div style='text-align: center;'>
-            <h2>API Endpoints</h2>
-            <p>Click any endpoint to test it. Hover to see allowed methods.</p>
-            <ul style='text-align: left;list-style: none;padding:0;'>
-                {links_html}
-            </ul>
-        </div>
+    html = """
+    <div style='font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;'>
+        <h1 style='text-align: center; color: #333;'>Directory for Charities API</h1>
+        <p style='text-align: center; color: #666;'>Available API Endpoints</p>
     """
+
+    for category, routes in endpoints.items():
+        html += f"<h3 style='color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 5px;'>{category}</h3><ul style='list-style: none; padding: 0;'>"
+        for name, url in routes.items():
+            html += f"<li style='margin: 5px 0;'><a href='{url}' style='color: #3498db; text-decoration: none;'><strong>{name}</strong></a> <span style='color: #7f8c8d;'>→ {url}</span></li>"
+        html += "</ul>"
+
+    html += "</div>"
+    return html
