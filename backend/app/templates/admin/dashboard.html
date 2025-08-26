@@ -1,0 +1,165 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">📊 Dashboard Overview</h1>
+        </div>
+    </div>
+
+    <!-- Key Metrics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary">
+                <div class="card-header">
+                    <i class="fa fa-users"></i> Total Users
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">{{ stats.total_users }}</h2>
+                    <p class="card-text">Registered users in system</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success">
+                <div class="card-header">
+                    <i class="fa fa-building"></i> Organizations
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">{{ stats.total_organizations }}</h2>
+                    <p class="card-text">Registered charities</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info">
+                <div class="card-header">
+                    <i class="fa fa-check-circle"></i> Verified Users
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">{{ stats.verified_users }}</h2>
+                    <p class="card-text">{{ stats.verification_rate }}% verification rate</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning">
+                <div class="card-header">
+                    <i class="fa fa-user-plus"></i> New This Week
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">{{ stats.new_users_this_week }}</h2>
+                    <p class="card-text">New user registrations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions & Recent Activity -->
+    <div class="row">
+        <!-- Quick Actions -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-bolt"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="{{ url_for('user.create_view') }}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-user-plus text-primary"></i> Add New User
+                        </a>
+                        <a href="{{ url_for('organization.create_view') }}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-building text-success"></i> Add New Organization
+                        </a>
+                        <a href="{{ url_for('user.index_view') }}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-list text-info"></i> Manage Users
+                        </a>
+                        <a href="{{ url_for('organization.index_view') }}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-list text-warning"></i> Manage Organizations
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-clock-o"></i> Recent Activity</h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_activity %}
+                        <div class="list-group">
+                            {% for activity in recent_activity %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">
+                                        {% if activity.status == 'verified' %}
+                                            <i class="fa fa-check-circle text-success"></i>
+                                        {% else %}
+                                            <i class="fa fa-clock-o text-warning"></i>
+                                        {% endif %}
+                                        {{ activity.message }}
+                                    </h6>
+                                    <small>{{ activity.timestamp }}</small>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No recent activity to display.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Status -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fa fa-heartbeat"></i> System Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><i class="fa fa-check-circle text-success"></i> Database: <strong>Connected</strong></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><i class="fa fa-check-circle text-success"></i> API: <strong>Online</strong></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><i class="fa fa-check-circle text-success"></i> Admin Panel: <strong>Active</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: none;
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background-color: rgba(0,0,0,0.03);
+    border-bottom: 1px solid rgba(0,0,0,0.125);
+}
+
+.list-group-item-action:hover {
+    background-color: #f8f9fa;
+}
+
+.text-primary { color: #007bff !important; }
+.text-success { color: #28a745 !important; }
+.text-info { color: #17a2b8 !important; }
+.text-warning { color: #ffc107 !important; }
+</style>
+{% endblock %}

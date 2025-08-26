@@ -2,6 +2,7 @@ Flask
 Flask-Migrate
 Flask-Cors
 Flask-SQLAlchemy
+Flask-JWT-Extended
 SQLAlchemy
 alembic
 python-dotenv
@@ -9,4 +10,5 @@ pytest
 requests
 flask-admin
 flask-swagger
+Werkzeug
 
