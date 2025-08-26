@@ -25,7 +25,7 @@ def create_app():
 	if db_url:
 		app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
 	else:
-		app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///example.db"
+		app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///../instance/example.db"
 	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 	#JWT SECRET FROM .env, should change it 
