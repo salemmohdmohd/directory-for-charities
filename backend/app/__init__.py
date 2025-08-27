@@ -2,8 +2,13 @@ import os
 from flask import Flask, jsonify
 from flask_migrate import Migrate
 from flask_cors import CORS
+from dotenv import load_dotenv
 from .utils import APIException, generate_sitemap
+from .config import Config
 from .db import db
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Import route blueprints
 from .routes.auth import auth_bp
@@ -15,15 +20,8 @@ from .routes.oauth import oauth_bp
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-# JWT Configuration
-app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'your-secret-key-change-in-production')
-
-db_url = os.getenv("DATABASE_URL")
-if db_url:
-	app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
-else:
-	app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///../instance/example.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Load configuration from Config class (which reads environment variables)
+app.config.from_object(Config)
 
 MIGRATE = Migrate(app, db)
 db.init_app(app)
