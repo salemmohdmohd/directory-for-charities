@@ -3,7 +3,6 @@ from flask import Flask, jsonify
 from flask_migrate import Migrate
 from flask_cors import CORS
 from .utils import APIException, generate_sitemap
-from .admin import setup_admin
 from .db import db
 
 # Import route blueprints
@@ -11,6 +10,7 @@ from .routes.auth import auth_bp
 from .routes.users import users_bp
 from .routes.orgs import orgs_bp
 from .routes.admin import admin_api_bp
+from .routes.oauth import oauth_bp
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -38,13 +38,20 @@ except ImportError:
 	print("Warning: flask-jwt-extended not installed. JWT features will not be available.")
 	pass
 
-setup_admin(app)
+# Import and setup admin (avoid circular import)
+try:
+	from .admin_setup import setup_admin
+	setup_admin(app)
+except ImportError:
+	print("Warning: Admin interface not available")
+	pass
 
 # Register blueprints
 app.register_blueprint(auth_bp)
 app.register_blueprint(users_bp)
 app.register_blueprint(orgs_bp)
 app.register_blueprint(admin_api_bp)
+app.register_blueprint(oauth_bp)
 
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):

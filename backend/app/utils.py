@@ -24,7 +24,11 @@ def generate_sitemap(app):
         },
         "Authentication": {
             "Login": "/auth/login",
-            "Signup": "/auth/signup"
+            "Signup": "/auth/signup",
+            "Google OAuth Login": "/auth/google/login",
+            "Google OAuth Callback": "/auth/google/callback",
+            "Link Google Account": "/auth/google/link",
+            "Unlink Google Account": "/auth/google/unlink"
         },
         "Users": {
             "Profile": "/users/profile",
